@@ -68,5 +68,5 @@ function equalradius(h){
 // normally, this would happen in a "scene description" file
 // but I am putting it here, so that if you want to get
 // rid of cubes, just don't load this file.
-grobjects.push(new triangularcylinder("cylinder1",[-2, 0, 0],1) );
-grobjects.push(new triangularcylinder("cylinder2",[-2, 0, -3],2) );
+//grobjects.push(new triangularcylinder("cylinder1",[-2, 0, 0],1) );
+//grobjects.push(new triangularcylinder("cylinder2",[-2, 0, -3],2) );

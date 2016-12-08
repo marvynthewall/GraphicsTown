@@ -77,12 +77,12 @@ var buildings = undefined;
    
    
    var d = 100.0;          // deep ground
-   var centergrid = 8.0;   // the center of the building
+   var centergrid = 12.0;   // the center of the building
    var low = 80.0;         // the lowest building
    var high = d;           // the highest building
    var minW = 4.0;         // the min of width
    var maxW = 6.0;         // the max of width
-   var bnum = 5;           // the number of buildings = (2 * bnum + 1)^2
+   var bnum = 10;           // the number of buildings = (2 * bnum + 1)^2
    
    var name;
    var position;

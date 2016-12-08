@@ -63,5 +63,5 @@ function funclog(h){
 
 })();
 
-grobjects.push(new logcylinder("logcylinder1",[0, 0, 4],1, [1, 1, 0]) );
-grobjects.push(new logcylinder("logcylinder2",[4, 0, -4], 0.8, [0.5, 1, 1]) );
+grobjects.push(new logcylinder("logcylinder1",[2, 0, -2],1, [1, 1, 0]) );
+grobjects.push(new logcylinder("logcylinder2",[-2, 0, -2], 0.8, [0.5, 1, 1]) );

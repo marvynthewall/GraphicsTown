@@ -175,5 +175,5 @@ var grobjects = grobjects || [];
     };
 
     // now that we've defined the object, add it to the global objects list
-    grobjects.push(pyramid);
+    //grobjects.push(pyramid);
 })();

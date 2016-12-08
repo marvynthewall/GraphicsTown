@@ -108,5 +108,5 @@ function funceight(h){
 //grobjects.push(new eight("eight1",[4, 0, 4],1, [1, 1, 0]) );
 //grobjects.push(new eight("eight2",[-4, 0, 4], 0.8, [0.5, 1, 1]) );
 
-grobjects.push(new Spinningeight("scube 1",[0.5, 0, -3],1,[0.2, 0.9, 0.3], 'Y'));
+//grobjects.push(new Spinningeight("scube 1",[0.5, 0, -3],1,[0.2, 0.9, 0.3], 'Y'));
    
