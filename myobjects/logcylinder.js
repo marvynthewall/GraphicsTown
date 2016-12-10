@@ -5,10 +5,6 @@ var grobjects = grobjects || [];
 
 var logcylinder = undefined;
 
-function funclog(h){
-   return -0.2 * Math.log( h + 0.2) + 0.6;
-}
-
 // this is a function that runs at loading time (note the parenthesis at the end)
 (function() {
    "use strict";
@@ -63,5 +59,3 @@ function funclog(h){
 
 })();
 
-grobjects.push(new logcylinder("logcylinder1",[2, 0, -2],1, [1, 1, 0]) );
-grobjects.push(new logcylinder("logcylinder2",[-2, 0, -2], 0.8, [0.5, 1, 1]) );

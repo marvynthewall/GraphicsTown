@@ -38,8 +38,8 @@ window.onload = function() {
 
     // set up the canvas and context
     var canvas = document.createElement("canvas");
-    canvas.setAttribute("width",600);
-    canvas.setAttribute("height",600);
+    canvas.setAttribute("width",900);
+    canvas.setAttribute("height",900);
     document.body.appendChild(canvas);
 
     // make a place to put the drawing controls - a div
@@ -140,7 +140,7 @@ window.onload = function() {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // figure out the transforms
-        var projM = twgl.m4.perspective(fov, 1, 0.1, 100);
+        var projM = twgl.m4.perspective(fov, 1, 0.1, 1000);
         var cameraM = twgl.m4.lookAt(lookFrom,lookAt,[0,1,0]);
         var viewM = twgl.m4.inverse(cameraM);
 

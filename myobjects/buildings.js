@@ -1,12 +1,8 @@
-/**
- * Create by Marvyn 2016/12/07
- */
+//Create by Marvyn Hsu 2016/12/07
 
 var grobjects = grobjects || [];
 
 var buildings = undefined;
-
-
 
 (function(){
    "use strict";
@@ -55,7 +51,6 @@ var buildings = undefined;
       var modelM = twgl.m4.scaling(this.size);
       twgl.m4.setTranslation(modelM, this.position, modelM);
       
-      
       var gl = drawingState.gl;
       gl.useProgram(shaderProgram.program);
       twgl.setBuffersAndAttributes(gl, shaderProgram, buffers);
@@ -72,7 +67,7 @@ var buildings = undefined;
 })();
 
 
-(function(){
+function setupbuildings(){
    // generate a lot of buildings
    
    
@@ -103,5 +98,5 @@ var buildings = undefined;
          grobjects.push(new buildings(name, position, [width, height, width]));
       }
 
-})();
+}
 

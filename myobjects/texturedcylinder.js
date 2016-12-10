@@ -143,142 +143,8 @@ function texturecylinderarrays(n, f, high, cut){
 }
 
 (function() {
+    // Textured Cylinder
     "use strict";
-   var vertexSource = "" +
-   "precision highp float;" +
-   "attribute vec3 vPosition;" +
-   "attribute vec3 vNormal;" +
-   "attribute vec2 aTexCoord;" +
-   "varying vec2 TexCoord;" +
-   "varying vec3 fNormal;" +
-   "// MVP matrices" +
-   "uniform mat4 pMatrix;" +
-   "uniform mat4 vMatrix;" +
-   "uniform mat4 mMatrix;" +
-   "uniform mat4 normalMatrix;" +
-   "void main(void){" +
-   "   fNormal = normalize( mat3(normalMatrix) * vNormal);" +
-   " // pass down directly" +
-   "   TexCoord = aTexCoord;" +
-   "   gl_Position = pMatrix * vMatrix * mMatrix * vec4(vPosition, 1.0);" +
-   "}"
-   var fragmentSource = "" + 
-   "precision highp float;" +
-   "varying vec2 TexCoord;" +
-   "uniform sampler2D Textureimage;" +
-   "uniform vec3 lightdir;" +
-   "varying vec3 fNormal;" +
-   "" +
-   "void main(void){" +
-   "   // control board" +
-   "   float diffuseeffect = 0.4;" +
-   "   float textureeffect = 0.8;" +
-   "   float speculareffect = 0.2;" +
-   "" +
-   "   // diffusion" +
-   "   vec3 diffusecolor = vec3(1.0, 1.0, 1.0);" +
-   "   vec3 diffuse = diffuseeffect * max(0.0, dot(fNormal, lightdir)) * diffusecolor;" +
-   "" +
-   "   // texture" +
-   "   vec4 TextureColor = textureeffect * texture2D(Textureimage, TexCoord);" +
-   "" +
-   "   vec4 finalcolor = vec4(diffuse + TextureColor.xyz, 1.0);" +
-   "   // final color" +
-   "   gl_FragColor = finalcolor;" +
-   "}" 
-
-    // image source
-    //var image = new Image();
-    //image.crossOrigin='anonymous';
-    //image.src = "https://farm6.staticflickr.com/5581/31101469160_7993ee6ab6_m.jpg";
-
-    //useful util function to simplify shader creation. type is either gl.VERTEX_SHADER or gl.FRAGMENT_SHADER
-    var createGLShader = function (gl, type, src) {
-        var shader = gl.createShader(type)
-        gl.shaderSource(shader, src);
-        gl.compileShader(shader);
-        if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
-            console.log("warning: shader failed to compile!")
-            console.log(gl.getShaderInfoLog(shader));
-            return null;
-        }
-
-        return shader;
-    }
-    //useful util function to return a glProgram from just vertex and fragment shader source.
-    var createGLProgram = function (gl, vSrc, fSrc) {
-        var program = gl.createProgram();
-        var vShader = createGLShader(gl, gl.VERTEX_SHADER, vSrc);
-        var fShader = createGLShader(gl, gl.FRAGMENT_SHADER, fSrc);
-        gl.attachShader(program, vShader);
-        gl.attachShader(program, fShader);
-        gl.linkProgram(program);
-
-        if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
-            console.log("warning: program failed to link");
-            return null;
-
-        }
-        return program;
-    }
-
-    //creates a gl buffer and unbinds it when done. 
-    var createGLBuffer = function (gl, data, usage) {
-        var buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, data, usage);
-        gl.bindBuffer(gl.ARRAY_BUFFER, null);
-        return buffer;
-    }
-
-    var findAttribLocations = function (gl, program, attributes) {
-       var out = {};
-       for(var i = 0; i < attributes.length;i++){
-          var attrib = attributes[i];
-          out[attrib] = gl.getAttribLocation(program, attrib);
-       }
-       return out;
-    }
-
-    var findUniformLocations = function (gl, program, uniforms) {
-       var out = {};
-       for(var i = 0; i < uniforms.length;i++){
-          var uniform = uniforms[i];
-          out[uniform] = gl.getUniformLocation(program, uniform);
-       }
-       return out;
-    }
-
-    var enableLocations = function (gl, attributes) {
-       for(var key in attributes){
-          var location = attributes[key];
-          gl.enableVertexAttribArray(location);
-       }
-    }
-
-    //always a good idea to clean up your attrib location bindings when done. You wont regret it later. 
-    var disableLocations = function (gl, attributes) {
-       for(var key in attributes){
-          var location = attributes[key];
-          gl.disableVertexAttribArray(location);
-       }
-    }
-
-    //creates a gl texture from an image object. Sometiems the image is upside down so flipY is passed to optionally flip the data.
-    //it's mostly going to be a try it once, flip if you need to. 
-    var createGLTexture = function (gl, image, flipY) {
-       var texture = gl.createTexture();
-       gl.bindTexture(gl.TEXTURE_2D, texture);
-       if(flipY){
-          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-       }
-       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,  gl.LINEAR);
-       gl.generateMipmap(gl.TEXTURE_2D);
-       gl.bindTexture(gl.TEXTURE_2D, null);
-       return texture;
-    }
 
     TexturedCylinder = function (name = null, func = null, imagesrc = null, side = null, cut = null, height = null, theta = 0, spin = 0) {
        this.name = name || "TexturedCylinder";
@@ -344,8 +210,6 @@ function texturecylinderarrays(n, f, high, cut){
 
        var modelM = twgl.m4.scaling([this.scale[0],this.scale[1], this.scale[2]]);
        twgl.m4.rotateY(modelM, this.theta, modelM);
-       console.log(this.name);
-       console.log(this.spin);
        if(this.spin == 1){
          var theta = Number(drawingState.realtime)/200.0;
          twgl.m4.rotateY(modelM, theta, modelM);
@@ -385,25 +249,5 @@ function texturecylinderarrays(n, f, high, cut){
        disableLocations(gl, this.attributes);
     }
 
-
-
-
-    // Drawing Something
-    var imagecoffee = "https://farm6.staticflickr.com/5581/31101469160_7993ee6ab6_m.jpg";
-    var imagevolcano="https://farm6.staticflickr.com/5503/31331287382_1be4451d83_b.jpg";
-
-    var test = new TexturedCylinder("t-cylinder1", tCylinder1, imagecoffee, 30, 1, 2);
-    //var test = new TexturedCylinder("t-cylinder1", 24);
-    test.position = [0, 3, 0];
-    var newtest = new TexturedCylinder("t-cylinder2", tCylinder2, imagecoffee, 4, 1, 1);
-    newtest.position = [0, 5 ,0];
-
-   
-
-    var tCvolcano = new TexturedCylinder("tC-volcano1", tCvolcano1, imagevolcano, 15, 8, 2);
-    tCvolcano.position = [3, 0, 3];
-    //grobjects.push(test);
-    //grobjects.push(newtest);
-    grobjects.push(tCvolcano);
 
 })();

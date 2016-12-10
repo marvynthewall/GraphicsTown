@@ -13,3 +13,6 @@ function tCylinder2(h){
 function tCvolcano1(h){
    return (-0.2) + 1 /( h + 0.4);
 }
+function funclog(h){
+   return -0.2 * Math.log( h + 0.2) + 0.6;
+}
