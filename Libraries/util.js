@@ -7,3 +7,7 @@ function findnormal(p1, p2, p3){
    var normal = [per[0] / norm, per[1]/norm, per[2]/norm];
    return normal;
 }
+function normalize(v){
+   var L = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+   return [v[0]/L, v[1]/L, v[2]/L];
+}

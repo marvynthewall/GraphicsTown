@@ -2,7 +2,6 @@
 // 2016/12/07
 // Setup the coffeeshop
 
-var grobjects = grobjects || [];
 
 function coffeeshop(){
    // construct coffee shop

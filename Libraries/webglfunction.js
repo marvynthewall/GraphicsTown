@@ -29,7 +29,6 @@ var createGLProgram = function (gl, vSrc, fSrc) {
    if(!gl.getProgramParameter(program, gl.LINK_STATUS)){
       console.log("warning: program failed to link");
       return null;
-
    }
    return program;
 }

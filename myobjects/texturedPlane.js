@@ -99,13 +99,13 @@ function cubePlaneArray(side, tc){
 
         this.program = createGLProgram(gl, vertexSource, fragmentSource);
         this.attributes = findAttribLocations(gl, this.program, ["vPosition", "vNormal", "aTexCoord"]);
-        this.uniforms = findUniformLocations(gl, this.program, ["pMatrix", "vMatrix", "mMatrix", "normalMatrix", "uTexture", "lightdir"]);
+        this.uniforms = findUniformLocations(gl, this.program, ["pMatrix", "vMatrix", "mMatrix", "normalMatrix", "uTexture", "lightdir", "tod"]);
 
         if(this.imagesrc != null){
            this.image = new Image();
            this.image.crossOrigin = 'anonymous';
            this.image.src = this.imagesrc;
-
+           
            this.texture = createGLTexture(gl, this.image, true);
         }
         this.array = cubePlaneArray(this.side, this.texcoord);
@@ -137,6 +137,7 @@ function cubePlaneArray(side, tc){
         gl.uniformMatrix4fv(this.uniforms.mMatrix, gl.FALSE, modelM);
         gl.uniformMatrix4fv(this.uniforms.normalMatrix, gl.FALSE, normalMatrix);
         gl.uniform3fv(this.uniforms.lightdir, drawingState.sunDirection);
+        gl.uniform1i(this.uniforms.tod, drawingState.timeOfDay);
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
@@ -162,17 +163,5 @@ function cubePlaneArray(side, tc){
 
         disableLocations(gl, this.attributes);
     }
-   /*
-    var test = new TexturedCylinder("t-cylinder1", tCylinder1, imagecoffee, 30, 1, 2);
-    //var test = new TexturedCylinder("t-cylinder1", 24);
-        test.position = [0, 3, 0];
-    var newtest = new TexturedCylinder("t-cylinder2", tCylinder2, imagecoffee, 4, 1, 1);
-    newtest.position = [0, 5 ,0];
-
-    var tCvolcano = new TexturedCylinder("tC-volcano1", tCvolcano1, imagevolcano, 15, 8, 2);
-    tCvolcano.position = [3, 0, 3];
-    grobjects.push(test);
-    grobjects.push(newtest);
-    grobjects.push(tCvolcano);
-   */
 })();
+

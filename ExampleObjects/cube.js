@@ -112,7 +112,7 @@ var SpinningCube = undefined;
         twgl.setBuffersAndAttributes(gl,shaderProgram,buffers);
         twgl.setUniforms(shaderProgram,{
             view:drawingState.view, proj:drawingState.proj, lightdir:drawingState.sunDirection,
-            cubecolor:this.color, model: modelM });
+            cubecolor:this.color, model: modelM, tod: drawingState.timeOfDay });
         twgl.drawBufferInfo(gl, gl.TRIANGLES, buffers);
     };
     SpinningCube.prototype.center = function(drawingState) {

@@ -180,7 +180,7 @@ function texturecylinderarrays(n, f, high, cut){
 
        this.program = createGLProgram(gl, vertexSource, fragmentSource);
        this.attributes = findAttribLocations(gl, this.program, ["vPosition", "vNormal", "aTexCoord"]);
-       this.uniforms = findUniformLocations(gl, this.program, ["pMatrix", "vMatrix", "mMatrix", "normalMatrix", "uTexture", "lightdir"]);
+       this.uniforms = findUniformLocations(gl, this.program, ["pMatrix", "vMatrix", "mMatrix", "normalMatrix", "uTexture", "lightdir", "tod"]);
 
        this.image = new Image();
        this.image.crossOrigin = 'anonymous';
@@ -223,6 +223,7 @@ function texturecylinderarrays(n, f, high, cut){
        gl.uniformMatrix4fv(this.uniforms.mMatrix, gl.FALSE, modelM);
        gl.uniformMatrix4fv(this.uniforms.normalMatrix, gl.FALSE, normalMatrix);
        gl.uniform3fv(this.uniforms.lightdir, drawingState.sunDirection);
+       gl.uniform1i(this.uniforms.tod, drawingState.timeOfDay);
 
        gl.activeTexture(gl.TEXTURE0);
        gl.bindTexture(gl.TEXTURE_2D, this.texture);
