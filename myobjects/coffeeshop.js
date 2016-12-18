@@ -17,13 +17,12 @@ function coffeeshop(){
    var coffeeshopBack = new TexturedPlane("coffeeshopBack", 'back', scale, imagesources[0], [0.0, 0.0, 1.0, 0.55]);
    var coffeeshopLeft = new TexturedPlane("coffeeshopLeft", 'left', scale, imagesources[1], [0.0, 0.0, 1.0, 0.55]);
    var coffeeshopRight = new TexturedPlane("coffeeshopRight", 'right', scale, imagesources[1], [0.0, 0.0, 1.0, 0.55]);
-   var coffeeshopRoof = new TexturedCylinder("coffeeshopRoof", tRoof, imagesources[3], 4, 1, 0.5, Math.PI/4);
-   coffeeshopRoof.scale = new Float32Array(scale);
+   var coffeeshopRoof = new TexturedCylinder("coffeeshopRoof", tRoof, imagesources[3], 4, 1, 0.5, [2.0, 1.4, 2.0],Math.PI/4);
    coffeeshopRoof.position = [0.0, 1.4, 0.0];
 
-   var spinningcoffeesign1 = new TexturedCylinder("spinningcoffeesign1", tCylinder1, imagesources[4], 30, 1, 0.8, 0, 1);
+   var spinningcoffeesign1 = new TexturedCylinder("spinningcoffeesign1", tCylinder1, imagesources[4], 30, 1, 0.8, [1, 1, 1],  0, 1);
    spinningcoffeesign1.position = [-1.07, 0.8, 1.07];
-   var spinningcoffeesign2 = new TexturedCylinder("spinningcoffeesign2", tCylinder1, imagesources[4], 30, 1, 0.8, 0, 1);
+   var spinningcoffeesign2 = new TexturedCylinder("spinningcoffeesign2", tCylinder1, imagesources[4], 30, 1, 0.8, [1, 1, 1], 0, 1);
    spinningcoffeesign2.position = [1.07, 0.8, 1.07];
 
    grobjects.push(coffeeshopFront);

@@ -7,9 +7,6 @@ var grobjects = grobjects || [];
 var triangularcylinder = undefined;
 //var SpinningCube = undefined;
 
-function equalradius(h){
-   return 0.5;
-}
 
 // this is a function that runs at loading time (note the parenthesis at the end)
 (function() {

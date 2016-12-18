@@ -83,21 +83,23 @@ var bezier = function (P){
 bezier.prototype.position = function (t){
    var u = [[1, t, t*t, t*t*t]];
    var position = MM(u, MM(this.Bmatrix, this.P)); // u * B * P
-   return position;
+   return position[0];
 }
 bezier.prototype.tangent = function (t){
    var u = [[1, t, t*t, t*t*t]];
    var tangent = MM(u, MM(this.Tmatrix, this.P)); // u * T * P
-   return tangent;
+   return tangent[0];
 }
-var spiralpath = function (base, H){
+var spiralpath = function (base, H, h, r, speed){
    this.base = base;
    this.H = H;
-   this.h = 1;
-   this.r = 5;
-   this.speed = 1;
+   this.h = h;
+   this.r = r;
+   this.speed = speed;
    this.path = this.createpath();
    this.time = this.path.length;
+   this.mytime = 0;
+   this.lasttime = undefined;
 }
 spiralpath.prototype.createpath = function(){
    var D = [[0, 0, 1], [1, 0, 0], [0, 0, -1], [-1, 0, 0]];
@@ -105,10 +107,10 @@ spiralpath.prototype.createpath = function(){
    // flat tangent
    var F = [[2, 0, 0], [0, 0, -2], [-2, 0, 0], [0, 0, 2]];
    // modify bar
-   var sbar = 1;
+   var sbar = 1.5;
    // side tangent
    var SU = [[2, 1, 0], [0, 1, -2], [-2, 1, 0], [0, 1, 2]];
-   var SD = [[-2, 1, 0], [0, 1, 2], [2, 1, 0], [0, 1, -2]];
+   var SD = [[2, -1, 0], [0, -1, -2], [-2, -1, 0], [0, -1, 2]];
    var Plist = [];
    var Tlist = [];
    // Create point list and tangent list
@@ -152,10 +154,19 @@ spiralpath.prototype.createpath = function(){
    return path;
 }
 spiralpath.prototype.accessinfo = function(t){
-   var realt = this.speed * t;
-   for( ; realt > this.time; realt -= this.time);
-   var pathnum = Math.floor(realt);
-   var patht = realt - pathnum;
+   var delta = 0;
+   if(!this.lasttime){
+      this.lasttime = t;
+   }
+   else {
+      delta = t - this.lasttime;
+      this.lasttime = t;
+   }
+   this.mytime += this.speed * delta;
+   for( ; this.mytime > this.time; this.mytime -= this.time);
+   var pathnum = Math.floor(this.mytime);
+   var patht = this.mytime - pathnum;
+   pathnum = Math.round(pathnum);
    var position = this.path[pathnum].position(patht);
    var tangent = this.path[pathnum].tangent(patht);
    return {position: position, tangent: tangent};

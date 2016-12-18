@@ -1,21 +1,4 @@
-/**
- * Created by Yusef.
- */
-
-/**
- A Very Simple Textured Plane using native WebGL. 
-
- Notice that it is possible to only use twgl for math. 
-
- Also, due to security restrictions the image was encoded as a Base64 string. 
- It is very simple to use somthing like this (http://dataurl.net/#dataurlmaker) to create one
- then its as simple as 
-     var image = new Image()
-     image.src = <base64string>
-
-
- **/
-
+// Created by Marvyn Hsu
 var grobjects = grobjects || [];
 var TexturedCylinder;
 
@@ -146,10 +129,10 @@ function texturecylinderarrays(n, f, high, cut){
     // Textured Cylinder
     "use strict";
 
-    TexturedCylinder = function (name = null, func = null, imagesrc = null, side = null, cut = null, height = null, theta = 0, spin = 0) {
+    TexturedCylinder = function (name = null, func = null, imagesrc = null, side = null, cut = null, height = null, scale = [1, 1, 1], theta = 0, spin = 0) {
        this.name = name || "TexturedCylinder";
        this.position = new Float32Array([0, 0, 0]);
-       this.scale = new Float32Array([1, 1, 1]);
+       this.scale = new Float32Array(scale);
        this.theta = theta;
        this.program = null;
        this.array = null;

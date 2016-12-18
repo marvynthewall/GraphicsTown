@@ -100,6 +100,11 @@ function setupbuildings(d, bnum, centergrid){
             height = d;
             width = 6.0;
          }
+         else if(i == -1 && j == -1){ // put the sinbuilding
+            // just give a value to keep safe
+            heightmap[i+bnum][j+bnum] = [centergrid * i, 0, centergrid * j];
+            continue;
+         }
          else{
             height = low + Math.random() * (high-low);
             width = minW + Math.random() * (maxW - minW);
