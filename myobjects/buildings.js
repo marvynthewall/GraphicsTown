@@ -67,18 +67,25 @@ var buildings = undefined;
 })();
 
 
-function setupbuildings(){
+function setupbuildings(d, bnum, centergrid){
    // generate a lot of buildings
-   
-   
-   var d = 100.0;          // deep ground
-   var centergrid = 12.0;   // the center of the building
-   var low = 80.0;         // the lowest building
+   // d = deep: the ground level of the building
+   // bnum = building numbers extending in one direction
+   // centergrid: the center of the building
+   var low = d - 20.0;         // the lowest building
    var high = d;           // the highest building
-   var minW = 4.0;         // the min of width
+   var minW = 5.0;         // the min of width
    var maxW = 6.0;         // the max of width
-   var bnum = 10;           // the number of buildings = (2 * bnum + 1)^2
    
+   var sidenum = 2 * bnum + 1;
+   // create the 2D array
+   var heightmap = [];
+   for ( i = 0; i < sidenum; ++i){
+      heightmap[i] = [];
+      for (j = 0 ; j < sidenum ; ++j)
+         heightmap[j] = [];
+   }
+
    var name;
    var position;
    var height;
@@ -86,17 +93,21 @@ function setupbuildings(){
 
    for ( i = -bnum ; i <= bnum; i += 1)
       for( j = -bnum ; j <= bnum ; j += 1){
-         if ( i == 0 && j == 0){
-            // the Center building!!
-            grobjects.push(new buildings("building-0-0", [0.0, -d, 0.0], [6.0, d, 6.0]));
-            continue;
-         }
          name = "building-" + i.toString() + "-" + j.toString();
          position = [centergrid * i, -d, centergrid * j];
-         height = low + Math.random() * (high-low);
-         width = minW + Math.random() * (maxW - minW);
+         if ( i == 0 && j == 0){
+            // the Center building!!
+            height = d;
+            width = 6.0;
+         }
+         else{
+            height = low + Math.random() * (high-low);
+            width = minW + Math.random() * (maxW - minW);
+         }
          grobjects.push(new buildings(name, position, [width, height, width]));
+         heightmap[i+bnum][j+bnum] = [centergrid * i, height - d, centergrid * j];
       }
+   return heightmap;
 
 }
 
