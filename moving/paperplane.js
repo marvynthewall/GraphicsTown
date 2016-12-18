@@ -50,16 +50,17 @@ function drawplane(){
 
    var shaderProgram = undefined;
    var buffers = undefined;
-   paperplane = function paperplane(name, size, color, position, pathheight, h, radius, speed) {
+   paperplane = function paperplane(name, size, color, position, pathheight, h, radius, speed, sbar = 1.5) {
       this.name = name;
       this.position = position || [0,0,0];
       this.pathheight = pathheight;
       this.h = h;
       this.radius = radius;
       this.speed = speed;
+      this.sbar = sbar;
       this.size = size || 1.0;
       this.color = color || [.7,.8,.9];
-      this.spiralpath = new spiralpath(this.position, this.pathheight, this.h, this.radius, this.speed);
+      this.spiralpath = new spiralpath(this.position, this.pathheight, this.h, this.radius, this.speed, this.sbar);
    }
    paperplane.prototype.init = function(drawingState) {
       var gl=drawingState.gl;

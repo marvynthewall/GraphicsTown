@@ -90,12 +90,13 @@ bezier.prototype.tangent = function (t){
    var tangent = MM(u, MM(this.Tmatrix, this.P)); // u * T * P
    return tangent[0];
 }
-var spiralpath = function (base, H, h, r, speed){
+var spiralpath = function (base, H, h, r, speed, sbar = 1.5){
    this.base = base;
    this.H = H;
    this.h = h;
    this.r = r;
    this.speed = speed;
+   this.sbar = sbar || 1.5;
    this.path = this.createpath();
    this.time = this.path.length;
    this.mytime = 0;
@@ -106,8 +107,6 @@ spiralpath.prototype.createpath = function(){
    // tangent
    // flat tangent
    var F = [[2, 0, 0], [0, 0, -2], [-2, 0, 0], [0, 0, 2]];
-   // modify bar
-   var sbar = 1.5;
    // side tangent
    var SU = [[2, 1, 0], [0, 1, -2], [-2, 1, 0], [0, 1, 2]];
    var SD = [[2, -1, 0], [0, -1, -2], [-2, -1, 0], [0, -1, 2]];
@@ -118,7 +117,7 @@ spiralpath.prototype.createpath = function(){
    var up = 1;
    for(var i = 0; h >= 0 ; i += 1){
       var dir = i % 4;  // direction
-      var p = VA(this.base, VA([0, h, 0] ,SVM(this.r, D[dir]))); // base + h + sbar*Direction
+      var p = VA(this.base, VA([0, h, 0] ,SVM(this.r, D[dir]))); // base + h + r*Direction
       Plist.push(p);
       if ( (dir == 0 || dir == 2) && (this.H-h) < this.h * 2){
          // End!!
@@ -145,8 +144,8 @@ spiralpath.prototype.createpath = function(){
    for(var i = 0 ; i <= Plist.length - 2 ; ++i){
       var p0 = Plist[i];
       var p3 = Plist[i+1];
-      var p1 = VA(p0, SVM(sbar, Tlist[i]));  // p0 + sbar * tangent
-      var p2 = VA(p3, SVM(-sbar, Tlist[i+1]));  // p3 + (-sbar) * tangent
+      var p1 = VA(p0, SVM(this.sbar, Tlist[i]));  // p0 + sbar * tangent
+      var p2 = VA(p3, SVM(-this.sbar, Tlist[i+1]));  // p3 + (-sbar) * tangent
       var P = [p0, p1, p2, p3];
       var newpath = new bezier(P);
       path.push(newpath);
